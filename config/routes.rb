@@ -223,6 +223,11 @@ Bioturk::Application.routes.draw do
   put 'users/password',       to: 'users#update_password'
   get 'users/stats/:id',      to: 'users#stats'
 
+  get  'users/permissions',                       to: 'users#permissions'
+  post 'users/permissions',                       to: 'users#permissions'
+  get  'users/permissions/:role',                 to: 'users#permissions_role'
+  post 'users/role_toggle/:user_id/:role_id',    to: 'users#role_toggle'
+
   resources :users do
     get 'change_password'
   end
@@ -234,4 +239,5 @@ Bioturk::Application.routes.draw do
   get '/logout', to: 'sessions#destroy'
   get '/item', to: 'items#update'
 
+  get '/error', to: 'home#error'
 end
