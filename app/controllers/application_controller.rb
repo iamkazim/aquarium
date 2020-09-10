@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
 
   # Catch unexpected errors
   def rescue_errors
-    if Rails.env == "development"
+    if Rails.env == "development" and 1==0
       yield
     else
       begin

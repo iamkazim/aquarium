@@ -135,7 +135,8 @@ class UsersController < ApplicationController
     @user = User.new
 
     if Rails.env == "development" and params[:error].to_i == 1
-      error = params[:throw,:error]
+      # THROW AN ERROR
+      params[:throw,:error]
     end
 
     respond_to do |format|

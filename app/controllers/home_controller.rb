@@ -10,21 +10,22 @@ class HomeController < ApplicationController
     begin
       @error=session[:error]
       if @error
-        @email = "Guest"
+        @email = "#{current_user.name} <#{current_user.email_address rescue current_user.login}>"
         session[:error]=nil
 
         uri = URI.parse("#{REMORA_SERVER}/error_post")
 
         header = {'Content-Type': 'text/json'}
-        params = {
+        options = {
           'email' => @email,
-          'error' => @error.to_json
+          'error' => @error,
+          'lab' => Bioturk::Application.config.instance_name
         }
 
         # Create the HTTP objects
         http = Net::HTTP.new(uri.host, uri.port)
         request = Net::HTTP::Post.new(uri.request_uri, header)
-        request.body = params.to_json
+        request.body = options.to_json
 
         # Send the request in a new thread
         # Close the database connection that the thread opens
